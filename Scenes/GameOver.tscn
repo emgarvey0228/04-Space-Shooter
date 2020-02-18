@@ -1,6 +1,6 @@
 [gd_scene format=2]
 
-[node name="Node2D" type="Node2D"]
+[node name="GameOver" type="Node2D"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_right = 1035.0

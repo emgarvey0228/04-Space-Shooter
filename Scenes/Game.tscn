@@ -1,28 +1,13 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assets/Space.jpg" type="Texture" id=1]
-[ext_resource path="res://Scripts/Bullet_R.gd" type="Script" id=2]
-[ext_resource path="res://Assets/bullet.png" type="Texture" id=3]
-[ext_resource path="res://Scripts/Player.gd" type="Script" id=4]
-[ext_resource path="res://Assets/spaceRockets_003.png" type="Texture" id=5]
-[ext_resource path="res://Assets/spaceMeteors_001.png" type="Texture" id=6]
-[ext_resource path="res://Assets/spaceShips_001.png" type="Texture" id=7]
-[ext_resource path="res://Scripts/Explosion.gd" type="Script" id=8]
-[ext_resource path="res://Assets/package/png frames/64x48/explosion1_0020.png" type="Texture" id=9]
-[ext_resource path="res://Assets/package/png frames/64x48/explosion1_0019.png" type="Texture" id=10]
-[ext_resource path="res://Assets/package/png frames/64x48/explosion1_0021.png" type="Texture" id=11]
-[ext_resource path="res://Assets/package/png frames/64x48/explosion1_0022.png" type="Texture" id=12]
-[ext_resource path="res://Assets/package/png frames/64x48/explosion1_0023.png" type="Texture" id=13]
-[ext_resource path="res://Assets/package/png frames/64x48/explosion1_0024.png" type="Texture" id=14]
-[ext_resource path="res://Scripts/HUD.gd" type="Script" id=15]
-
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
+[ext_resource path="res://Scripts/Bullets.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=3]
+[ext_resource path="res://Assets/spaceRockets_003.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/Meteors.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/Enemies.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/HUD.gd" type="Script" id=7]
+[ext_resource path="res://Assets/solar_eclipse.ogg" type="AudioStream" id=8]
 
 [node name="Game" type="Node2D"]
 
@@ -35,39 +20,29 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="ColorRect" type="ColorRect" parent="Background"]
-margin_left = -33.0
-margin_top = -10.0
-margin_right = 1083.0
-margin_bottom = 788.0
+margin_left = -46.6747
+margin_top = -11.2432
+margin_right = 1069.33
+margin_bottom = 786.757
 color = Color( 0, 0, 0, 0.364706 )
 
 [node name="Bullets" type="Node2D" parent="."]
-
-[node name="Bullet_R" type="RigidBody2D" parent="Bullets"]
-collision_layer = 2
-collision_mask = 12
-mode = 2
-gravity_scale = 0.0
-can_sleep = false
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="Bullets/Bullet_R"]
-scale = Vector2( 0.12, 0.12 )
-texture = ExtResource( 3 )
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bullets/Bullet_R"]
-scale = Vector2( 0.12, 0.12 )
-polygon = PoolVector2Array( 6, 24, -6, 24, -6, -24, 6, -24 )
+[node name="Timer" type="Timer" parent="Bullets"]
+one_shot = true
 
 [node name="Enemy Bullets" type="Node2D" parent="."]
 
 [node name="Player" type="KinematicBody2D" parent="."]
-script = ExtResource( 4 )
+position = Vector2( 188.96, 116.857 )
+scale = Vector2( 0.8, 0.8 )
+script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
 position = Vector2( 488.268, 645.976 )
 scale = Vector2( 0.3, 0.3 )
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
 position = Vector2( 488.268, 645.976 )
@@ -75,70 +50,46 @@ scale = Vector2( 0.3, 0.3 )
 polygon = PoolVector2Array( 25.5, -300.9, 25.5, -298.7, 34.5, -288.8, 34.5, -286.5, 47.5, -264.5, 47.5, -261.4, 59.5, -230.4, 59.5, -226, 70.5, -185.3, 70.5, -179.4, 74.5, -161.2, 74.5, -119.4, 78.8, -123, 87.5, -123, 87.5, -121, 103.5, -108, 103.5, -105.7, 106.5, -101.7, 106.5, -83.9, 116.5, -71.7, 116.5, 10.9, 109.5, 16.9, 109.5, 56.2, 116.5, 63.2, 116.5, 143, 117.5, 198, 115.1, 198, 104.1, 205, 74.5, 205, 74.5, 228.2, 71.9, 239.1, 79.5, 258.6, 79.5, 280, 78.2, 280, 75.2, 296, 73.8, 296, 64.8, 315, 35.6, 315, 34.6, 294, 27.3, 280, 17.4, 280, 16.4, 312, 14.6, 312, 12.6, 315, -10.5, 315, -10.5, 312.7, -14.5, 307.7, -14.5, 280, -21.7, 280, -29.5, 292.5, -29.5, 308.2, -30.9, 315, -60.5, 315, -60.5, 312.5, -69.5, 296.5, -69.5, 293, -75.5, 272.3, -75.5, 265.8, -72.1, 249, -70.7, 249, -67.5, 242.5, -67.5, 237.3, -70.5, 228.3, -70.5, 205, -103.9, 205, -113.5, 201.4, -113.5, 199.8, -117.5, 195.8, -117.5, 148.8, -114.5, 139.7, -114.5, 61, -112.3, 61, -107.5, 56.2, -107.5, 17.8, -114.5, 10.8, -114.5, -74, -112.4, -74, -104.5, -83.7, -104.5, -104, -102.5, -104, -90.5, -120, -87.8, -120, -76.5, -123.8, -76.5, -121, -70.5, -116.8, -70.5, -162.2, -58.1, -222, -57, -222, -46, -259, -44.8, -259, -29.8, -290, -28.6, -290, -20.6, -302, -19.4, -302, -5.5, -314.9, 9.5, -315 )
 
 [node name="Meteors" type="Node2D" parent="."]
-editor/display_folded = true
-
-[node name="Meteor" type="RigidBody2D" parent="Meteors"]
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Meteors/Meteor"]
-position = Vector2( 0, -100 )
-scale = Vector2( 0.2, 0.2 )
-texture = ExtResource( 6 )
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Meteors/Meteor"]
-position = Vector2( 0, -100 )
-scale = Vector2( 0.2, 0.2 )
-polygon = PoolVector2Array( 18.5, -226.3, 143.5, -172.3, 143.5, -170.6, 213.5, -58.6, 213.5, 27.1, 209.4, 89, 207.6, 89, 136.6, 208, 132.9, 208, 32.7, 227, -14.5, 227, -14.5, 225.5, -136.5, 190.5, -136.5, 189, -141.5, 185, -141.5, 182.5, -209.5, 70.6, -209.5, 59, -213.5, 5.7, -213.5, -73, -120.3, -169, -118, -169, -1.10001, -227, 18.5, -227 )
+[node name="Timer" type="Timer" parent="Meteors"]
+autostart = true
 
 [node name="Enemies" type="Node2D" parent="."]
-editor/display_folded = true
+script = ExtResource( 6 )
 
-[node name="Enemy" type="KinematicBody2D" parent="Enemies"]
-position = Vector2( 0, -100 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="Timer" type="Timer" parent="Enemies"]
+autostart = true
 
-[node name="Sprite" type="Sprite" parent="Enemies/Enemy"]
-position = Vector2( 0, -100 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 7 )
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Enemies/Enemy"]
-scale = Vector2( 0.25, 0.25 )
-polygon = PoolVector2Array( 26, -87, 26, -59.4, 27.4, -66, 29.3, -66, 66.4, -91, 96.8, -91, 99, -65.3, 99, -63, 97.5, -63, 64.5, 55, 62.8, 55, 58.8, 59, 39, 59, 39, 61.3, 31.5, 86, 30.1, 86, 26.1, 92, 18.1, 92, -18.2, 94, -20, 94, -20, 91.5, -31, 88.5, -31, 84.3, -38.5, 59, -58.7, 59, -65, 54, -65, 50.3, -99, -64.3, -99, -89, -61, -89, -61, -87.1, -27, -65.1, -27, -62.3, -26, -58.9, -26, -86.9, -19, -92.9, -19, -94, 17, -94 )
-
-[node name="Explosion" type="Node2D" parent="."]
-
-[node name="Explosion" type="Node2D" parent="Explosion"]
-script = ExtResource( 8 )
-
-[node name="Sprite" type="AnimatedSprite" parent="Explosion/Explosion"]
-frames = SubResource( 1 )
-frame = 3
-playing = true
+[node name="Explosions" type="Node2D" parent="."]
 
 [node name="HUD" type="Node2D" parent="."]
-script = ExtResource( 15 )
+script = ExtResource( 7 )
 
 [node name="Health" type="Label" parent="HUD"]
-margin_left = 948.825
-margin_top = 10.3917
-margin_right = 990.825
-margin_bottom = 24.3917
-text = "Health"
+margin_left = 42.8905
+margin_top = 19.1095
+margin_right = 84.8905
+margin_bottom = 33.1095
+text = "Health:"
 align = 1
 valign = 1
 
 [node name="Score" type="Label" parent="HUD"]
-margin_left = 24.9928
-margin_top = 10.2243
-margin_right = 64.9928
-margin_bottom = 24.2243
-text = "Score"
+margin_left = 942.243
+margin_top = 21.4589
+margin_right = 982.243
+margin_bottom = 35.4589
+text = "Score:"
 align = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+autoplay = true
 [connection signal="health_changed" from="Player" to="HUD" method="_on_Player_health_changed"]
 [connection signal="score_changed" from="Player" to="HUD" method="_on_Player_score_changed"]
-[connection signal="animation_finished" from="Explosion/Explosion/Sprite" to="Explosion/Explosion" method="_on_Sprite_animation_finished"]
+[connection signal="timeout" from="Meteors/Timer" to="Meteors" method="_on_Timer_timeout"]
+[connection signal="timeout" from="Enemies/Timer" to="Enemies" method="_on_Timer_timeout"]
